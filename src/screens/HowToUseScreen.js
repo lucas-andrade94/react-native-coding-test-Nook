@@ -2,7 +2,7 @@ import React from "react";
 import { SafeAreaView, StyleSheet, Text } from "react-native";
 import { StatusBar } from "expo-status-bar";
 
-const AboutScreen = () => {
+const HowToUseScreen = () => {
   return (
     <SafeAreaView>
       <StatusBar style="light" />
@@ -11,6 +11,6 @@ const AboutScreen = () => {
   );
 };
 
-export default AboutScreen;
+export default HowToUseScreen;
 
 const styles = StyleSheet.create({});

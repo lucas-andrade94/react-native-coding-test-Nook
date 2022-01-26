@@ -4,14 +4,21 @@ import { StatusBar } from "expo-status-bar";
 import { useRecoilState } from "recoil";
 import { Checkbox, Title, Button } from "react-native-paper";
 
-import { blacklistFlagsState, categoryState } from "../../atoms/jokesAtom";
+import {
+  blacklistFlagsState,
+  categoryState,
+  stringCategoryState,
+  stringBlacklistState,
+} from "../../atoms/jokesAtom";
 
 const HomeScreen = () => {
   const [category, setCategory] = useRecoilState(categoryState);
   const [blacklist, setBlacklist] = useRecoilState(blacklistFlagsState);
 
-  const [categoryString, setCategoryString] = useState("");
-  const [blacklistString, setBlacklistString] = useState("");
+  const [categoryString, setCategoryString] =
+    useRecoilState(stringCategoryState);
+  const [blacklistString, setBlacklistString] =
+    useRecoilState(stringBlacklistState);
 
   const [programming, setProgramming] = useState(false);
   const [misc, setMisc] = useState(false);
@@ -28,9 +35,6 @@ const HomeScreen = () => {
   const [explicit, setExplicit] = useState(false);
 
   const setParams = () => {
-    setCategory([]);
-    setBlacklist([]);
-
     let categoryTemp = [];
     let blacklistTemp = [];
 

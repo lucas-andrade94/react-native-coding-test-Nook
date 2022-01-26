@@ -3,9 +3,36 @@ import { StyleSheet, View } from "react-native";
 import { Title, Drawer, Button } from "react-native-paper";
 import { DrawerContentScrollView, DrawerItem } from "@react-navigation/drawer";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import { useRecoilState } from "recoil";
+import axios from "axios";
+
+import {
+  jokeDeliveryState,
+  jokeSetupState,
+  stringBlacklistState,
+  stringCategoryState,
+} from "../../atoms/jokesAtom";
+import { getUrl } from "../api/fetchJoke";
 
 const DrawerContent = (props) => {
   const [loading, setLoading] = useState(false);
+  const [category, setCategory] = useRecoilState(stringCategoryState);
+  const [blacklist, setBlacklist] = useRecoilState(stringBlacklistState);
+  const [setup, setSetup] = useRecoilState(jokeSetupState);
+  const [delivery, setDelivery] = useRecoilState(jokeDeliveryState);
+
+  const getJoke = () => {
+    const url = getUrl(category, blacklist);
+    setSetup("");
+    setDelivery("");
+
+    if (!url) return;
+
+    axios.get(url).then((res) => {
+      setSetup(res.data.setup);
+      setDelivery(res.data.delivery);
+    });
+  };
 
   return (
     <View style={styles.drawerContent}>
@@ -26,9 +53,9 @@ const DrawerContent = (props) => {
               icon={({ color, size }) => (
                 <Ionicons name="book-outline" color="#ffd453" size={size} />
               )}
-              label="About"
+              label="How To Use"
               labelStyle={{ color: "#ffd453" }}
-              onPress={() => props.navigation.navigate("AboutScreen")}
+              onPress={() => props.navigation.navigate("HowToUseScreen")}
             />
           </Drawer.Section>
 
@@ -46,7 +73,7 @@ const DrawerContent = (props) => {
               labelStyle={{ color: "#20272e" }}
               mode="contained"
               loading={loading}
-              onPress={() => {}}
+              onPress={getJoke}
             >
               Show me a joke
             </Button>

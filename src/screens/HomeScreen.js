@@ -214,14 +214,14 @@ export default HomeScreen;
 
 const styles = StyleSheet.create({
   container: {
-    padding: 5,
+    padding: 10,
   },
 
   containerCheckbox: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    paddingHorizontal: 10,
+    paddingHorizontal: 5,
     marginBottom: 10,
   },
 

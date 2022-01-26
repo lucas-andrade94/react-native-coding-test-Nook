@@ -3,6 +3,7 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 
 import BottomTabNavigator from "./BottomTabNavigator";
 import DrawerContent from "../components/DrawerContent";
+import JokeScreen from "../screens/JokeScreen";
 
 const Drawer = createDrawerNavigator();
 
@@ -13,12 +14,15 @@ const globalScreenOptions = {
 };
 const DrawerNavigator = () => {
   return (
-    <Drawer.Navigator
-      drawerContent={(props) => <DrawerContent {...props} />}
-      screenOptions={globalScreenOptions}
-    >
-      <Drawer.Screen name="Jokes" component={BottomTabNavigator} />
-    </Drawer.Navigator>
+    <>
+      <Drawer.Navigator
+        drawerContent={(props) => <DrawerContent {...props} />}
+        screenOptions={globalScreenOptions}
+      >
+        <Drawer.Screen name="Jokes App" component={BottomTabNavigator} />
+        <Drawer.Screen name="Joke" component={JokeScreen} />
+      </Drawer.Navigator>
+    </>
   );
 };
 

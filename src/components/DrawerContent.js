@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
+import axios from "axios";
+import { useRecoilState } from "recoil";
+import * as Notifications from "expo-notifications";
 import { StyleSheet, View } from "react-native";
 import { Title, Drawer, Button } from "react-native-paper";
 import { DrawerContentScrollView, DrawerItem } from "@react-navigation/drawer";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import { useRecoilState } from "recoil";
-import axios from "axios";
 
 import {
   jokeDeliveryState,
@@ -15,22 +16,33 @@ import {
 import { getUrl } from "../api/fetchJoke";
 
 const DrawerContent = (props) => {
-  const [loading, setLoading] = useState(false);
   const [category, setCategory] = useRecoilState(stringCategoryState);
   const [blacklist, setBlacklist] = useRecoilState(stringBlacklistState);
   const [setup, setSetup] = useRecoilState(jokeSetupState);
   const [delivery, setDelivery] = useRecoilState(jokeDeliveryState);
 
-  const getJoke = () => {
+  const getJoke = async () => {
     const url = getUrl(category, blacklist);
     setSetup("");
     setDelivery("");
 
-    if (!url) return;
-
-    axios.get(url).then((res) => {
+    await axios.get(url).then((res) => {
       setSetup(res.data.setup);
       setDelivery(res.data.delivery);
+    });
+  };
+
+  const triggerLocalNotificationHandler = () => {
+    Notifications.scheduleNotificationAsync({
+      content: {
+        title: "Here is your joke",
+      },
+      trigger: null,
+    });
+
+    Notifications.addNotificationResponseReceivedListener(() => {
+      props.navigation.closeDrawer();
+      props.navigation.navigate("Joke");
     });
   };
 
@@ -72,8 +84,10 @@ const DrawerContent = (props) => {
               color="#ffd453"
               labelStyle={{ color: "#20272e" }}
               mode="contained"
-              loading={loading}
-              onPress={getJoke}
+              onPress={async () => {
+                await getJoke().then(triggerLocalNotificationHandler());
+              }}
+              disabled={!category}
             >
               Show me a joke
             </Button>

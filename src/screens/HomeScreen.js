@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { SafeAreaView, StyleSheet, Text, View } from "react-native";
-import { StatusBar } from "expo-status-bar";
 import { useRecoilState } from "recoil";
+import { StatusBar } from "expo-status-bar";
+import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import { Checkbox, Title, Button } from "react-native-paper";
 
 import {
@@ -61,7 +61,7 @@ const HomeScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="light" />
-      <Title>Select category/categories</Title>
+      <Title>Select category/categories (required)</Title>
       <View style={styles.containerCheckbox}>
         <View style={styles.option}>
           <Text>Programming</Text>

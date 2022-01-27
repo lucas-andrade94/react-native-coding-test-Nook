@@ -1,5 +1,5 @@
 <h1 align="center">
-    Nook Calendar - Coding Test
+    Jokes (Nook Calendar - Coding Test)
 </h1>
 
 <p align="center">
@@ -17,6 +17,7 @@ Project developed using the following technologies:
 - [React Navigation](https://reactnavigation.org/)
 - [Recoil](https://recoiljs.org/)
 - [Axios](https://www.axios.com/)
+- [JokeAPI](https://v2.jokeapi.dev/)
 
 ## 💿 Instalation
 
